@@ -387,7 +387,7 @@ BEGIN
 END
 --
 exec sp_InsertCustomer 'KH12','Pham Viet Hung','34/34B Nguyen Trai, Q1, TpHCM','812881','02/05/1983','07/09/2004',67500
-select * from KHACHHANG
+--Tao 1 procedure cap nhat ten dua theo makh
 CREATE PROCEDURE sp_1
 	@MAKH char(4),
 	@HOTEN varchar(40)
@@ -398,3 +398,15 @@ BEGIN
 	where MAKH=@MAKH
 END
 exec sp_1 'KH12','Pham Nam'
+--cap nhat dia chi dua theo ma kh
+CREATE PROCEDURE sp_2
+	@MAKH char(4),
+	@DCHI varchar(50)
+AS
+BEGIN
+	update KHACHHANG
+	set DCHI=@DCHI
+	where MAKH=@MAKH
+END
+exec sp_2 'KH12','HANOI'
+select * from KHACHHANG
