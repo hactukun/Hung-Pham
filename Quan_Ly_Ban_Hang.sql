@@ -371,3 +371,30 @@ BEGIN
 END
 select *
 from KHACHHANG
+--procedure 
+CREATE PROCEDURE sp_InsertCustomer
+	@MAKH char(4),
+	@HOTEN varchar(40),
+	@DCHI varchar(50),
+	@SODT varchar(20),
+	@NGSINH smalldatetime,
+	@NGDK smalldatetime,
+	@DOANHSO money
+AS
+BEGIN
+	INSERT INTO KHACHHANG (MAKH, HOTEN, DCHI, SODT, NGSINH, NGDK, DOANHSO)
+	VALUES (@MAKH, @HOTEN, @DCHI, @SODT, @NGSINH, @NGDK, @DOANHSO)
+END
+--
+exec sp_InsertCustomer 'KH12','Pham Viet Hung','34/34B Nguyen Trai, Q1, TpHCM','812881','02/05/1983','07/09/2004',67500
+select * from KHACHHANG
+CREATE PROCEDURE sp_1
+	@MAKH char(4),
+	@HOTEN varchar(40)
+AS
+BEGIN
+	update KHACHHANG
+	set HOTEN = @HOTEN
+	where MAKH=@MAKH
+END
+exec sp_1 'KH12','Pham Nam'
