@@ -325,3 +325,35 @@ FROM HOADON H
 WHERE MAKH NOT IN(SELECT MAKH
 FROM KHACHHANG K 
 WHERE K.MAKH = H.MAKH)
+--Them 1 khach hang
+insert into KHACHHANG values ('KH11','Pham Viet Hung','34/34B Nguyen Trai, Q1, TpHCM','812881','02/05/1983','07/09/2004',67500)
+--trigger them 
+CREATE TRIGGER tr_insert_khachhang
+ON KHACHHANG
+AFTER INSERT
+AS
+BEGIN
+    -- Kiểm tra nếu hoten là null hoặc rỗng, thì set giá trị mặc định là 'Unknown'
+    UPDATE KHACHHANG
+    SET HOTEN = 'Unknown'
+    WHERE HOTEN IS NULL OR HOTEN = '';
+
+    -- Kiểm tra nếu dchi là null hoặc rỗng, thì set giá trị mặc định là 'Unknown'
+    UPDATE KHACHHANG
+    SET DCHI = 'Unknown'
+    WHERE DCHI IS NULL OR DCHI = '';
+
+    -- Kiểm tra nếu sodt là null hoặc rỗng, thì set giá trị mặc định là 'Unknown'
+    UPDATE KHACHHANG
+    SET SODT = 'Unknown'
+    WHERE SODT IS NULL OR SODT = '';
+
+    -- Kiểm tra nếu ngsinh là null hoặc không hợp lệ, thì set giá trị mặc định là '1900-01-01'
+    UPDATE KHACHHANG
+    SET NGSINH = '1900-01-01'
+    WHERE NGSINH IS NULL OR NOT ISDATE(NGSINH) = 1;
+
+    -- Kiểm tra nếu ngdk là null hoặc không hợp lệ, thì set giá trị mặc định là ngay hiện tại
+    UPDATE KHACHHANG
+    SET NGDK = GETDATE()
+    WHERE NGDK IS NULL OR NOT ISDATE(NGDK) = 1;
